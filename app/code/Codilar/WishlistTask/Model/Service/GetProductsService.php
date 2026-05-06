@@ -20,7 +20,17 @@ class GetProductsService
     public function execute($customerId)
     {
         try {
-            $wishlist = $this->wishlistFactory->create()->loadByCustomerId($customerId, true);
+            $wishlist = $this->wishlistFactory->create()->loadByCustomerId($customerId, false); // Don't auto-create
+            
+            // If no wishlist exists, return empty result
+            if (!$wishlist->getId()) {
+                return $this->jsonHelper->jsonEncode([
+                    'success' => true,
+                    'items' => [],
+                    'total_count' => 0
+                ]);
+            }
+            
             $items = [];
 
             foreach ($wishlist->getItemCollection() as $item) {

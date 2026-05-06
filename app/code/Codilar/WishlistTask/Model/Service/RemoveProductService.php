@@ -21,7 +21,12 @@ class RemoveProductService
     public function execute($customerId, $itemId)
     {
         try {
-            $wishlist = $this->wishlistFactory->create()->loadByCustomerId($customerId, true);
+            $wishlist = $this->wishlistFactory->create()->loadByCustomerId($customerId, false); // Don't auto-create
+            
+            if (!$wishlist->getId()) {
+                throw new LocalizedException(__('No wishlist found for customer'));
+            }
+            
             $item = $wishlist->getItem($itemId);
             
             if (!$item || $item->getWishlistId() != $wishlist->getId()) {

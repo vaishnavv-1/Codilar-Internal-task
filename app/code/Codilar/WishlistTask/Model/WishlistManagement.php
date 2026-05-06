@@ -42,11 +42,6 @@ class WishlistManagement implements WishlistManagementInterface
         $this->moveToWishlistService = $moveToWishlistService;
     }
 
-    protected function isEnabled()
-    {
-        return $this->scopeConfig->getValue('codilar_wishlist/general/enabled');
-    }
-
     protected function getCustomerId()
     {
         return $this->userContext->getUserId();
@@ -54,10 +49,7 @@ class WishlistManagement implements WishlistManagementInterface
 
     public function addProduct($productSku, $qty = 1)
     {
-        if (!$this->isEnabled()) {
-            return $this->jsonHelper->jsonEncode(['success' => false, 'message' => 'Module is disabled']);
-        }
-
+        // Module is always enabled - no configuration check
         $customerId = $this->getCustomerId();
         if (!$customerId) {
             return $this->jsonHelper->jsonEncode(['success' => false, 'message' => 'Customer not authenticated']);
@@ -68,10 +60,7 @@ class WishlistManagement implements WishlistManagementInterface
 
     public function removeProduct($itemId)
     {
-        if (!$this->isEnabled()) {
-            return $this->jsonHelper->jsonEncode(['success' => false, 'message' => 'Module is disabled']);
-        }
-
+        // Module is always enabled - no configuration check
         $customerId = $this->getCustomerId();
         if (!$customerId) {
             return $this->jsonHelper->jsonEncode(['success' => false, 'message' => 'Customer not authenticated']);
@@ -82,10 +71,7 @@ class WishlistManagement implements WishlistManagementInterface
 
     public function getProducts()
     {
-        if (!$this->isEnabled()) {
-            return $this->jsonHelper->jsonEncode(['success' => false, 'message' => 'Module is disabled']);
-        }
-
+        // Module is always enabled - no configuration check
         $customerId = $this->getCustomerId();
         if (!$customerId) {
             return $this->jsonHelper->jsonEncode(['success' => false, 'message' => 'Customer not authenticated']);
@@ -96,10 +82,7 @@ class WishlistManagement implements WishlistManagementInterface
 
     public function moveToCart($itemId)
     {
-        if (!$this->isEnabled()) {
-            return $this->jsonHelper->jsonEncode(['success' => false, 'message' => 'Module is disabled']);
-        }
-
+        // Module is always enabled - no configuration check
         $customerId = $this->getCustomerId();
         if (!$customerId) {
             return $this->jsonHelper->jsonEncode(['success' => false, 'message' => 'Customer not authenticated']);
@@ -110,10 +93,7 @@ class WishlistManagement implements WishlistManagementInterface
 
     public function moveToWishlist($quoteItemId)
     {
-        if (!$this->isEnabled()) {
-            return $this->jsonHelper->jsonEncode(['success' => false, 'message' => 'Module is disabled']);
-        }
-
+        // Module is always enabled - no configuration check
         $customerId = $this->getCustomerId();
         if (!$customerId) {
             return $this->jsonHelper->jsonEncode(['success' => false, 'message' => 'Customer not authenticated']);

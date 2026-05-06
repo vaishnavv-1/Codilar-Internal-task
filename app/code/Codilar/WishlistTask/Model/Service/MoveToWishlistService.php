@@ -33,8 +33,22 @@ class MoveToWishlistService
     public function execute($customerId, $quoteItemId)
     {
         try {
-            $quote = $this->quoteFactory->create()->loadByCustomer($customerId);
-            $quoteItem = $quote->getItemById($quoteItemId);
+            // Load customer's active quote/cart
+            $quote = $this->quoteFactory->create();
+            $quote->loadByCustomer($customerId);
+            
+            if (!$quote->getId()) {
+                throw new LocalizedException(__('No active cart found for customer'));
+            }
+            
+            // Find the cart item by iterating through all items
+            $quoteItem = null;
+            foreach ($quote->getAllItems() as $item) {
+                if ($item->getId() == $quoteItemId || $item->getItemId() == $quoteItemId) {
+                    $quoteItem = $item;
+                    break;
+                }
+            }
 
             if (!$quoteItem) {
                 throw new LocalizedException(__('Item not found in cart'));
@@ -48,8 +62,9 @@ class MoveToWishlistService
             $wishlist->addNewItem($product, ['qty' => $qty]);
             $wishlist->save();
 
-            // Delete cart item using repository
-            $this->cartItemRepository->deleteById($quote->getId(), $quoteItemId);
+            // Remove item from cart
+            $quote->removeItem($quoteItem->getId());
+            $quote->save();
 
             return $this->jsonHelper->jsonEncode([
                 'success' => true,
