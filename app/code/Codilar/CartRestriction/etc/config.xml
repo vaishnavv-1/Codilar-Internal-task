@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <codilar_cart>
+            <restriction>
+                <enabled>1</enabled>
+                <price_threshold>50</price_threshold>
+                <error_message>Please add {{difference}} more to reach minimum order value of {{minimum}}.</error_message>
+            </restriction>
+        </codilar_cart>
+    </default>
+</config>

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="codilar_cart" translate="label" type="text" sortOrder="300" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Cart Restriction</label>
+            <tab>general</tab>
+            <resource>Magento_Config::config</resource>
+            <group id="restriction" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Restriction Settings</label>
+                <field id="enabled" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Enable Feature</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="price_threshold" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Minimum Product Amount</label>
+                    <validate>validate-number validate-greater-than-zero</validate>
+                    <comment>Define the minimum allowed product price</comment>
+                </field>
+                <field id="error_message" translate="label" type="textarea" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Error Message</label>
+                    <comment>Use {{difference}} for amount needed and {{minimum}} for minimum amount</comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
